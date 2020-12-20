@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^signup/', qa.views.test, name='signup'),
     url(r'^ask/', qa.views.test, name='test'),
     url(r'^popular/', qa.views.test, name='test'),
-    url(r'^new/' qa.views.test, name='test'),
+    url(r'^new/', qa.views.test, name='test'),
     path('question/<int:id>/', views.test, name='question'),
     path('admin/', admin.site.urls),
 ]
