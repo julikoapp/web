@@ -16,14 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
+from qa import views
 
 urlpatterns = [
-    url(r'^$',qa.views.test, name='main'),
-    url(r'^login/', qa.views.test, name='login'),
-    url(r'^signup/', qa.views.test, name='signup'),
-    url(r'^ask/', qa.views.test, name='test'),
-    url(r'^popular/', qa.views.test, name='test'),
-    url(r'^new/', qa.views.test, name='test'),
+    url(r'^$',views.test, name='main'),
+    url(r'^login/', views.test, name='login'),
+    url(r'^signup/', views.test, name='signup'),
+    url(r'^ask/', views.test, name='test'),
+    url(r'^popular/', views.test, name='test'),
+    url(r'^new/', views.test, name='test'),
     path('question/<int:id>/', views.test, name='question'),
     path('admin/', admin.site.urls),
 ]
