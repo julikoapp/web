@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^ask/', views.test, name='test'),
     url(r'^popular/', views.test, name='test'),
     url(r'^new/', views.test, name='test'),
-    url(r'^question/(?P<id>[0-9]+)/$', views.test, name='question'),
+    url(r'^question/(?P<slug>\w+)/$', views.question_details, name='question_details'),
+    url(r'^page/(?P<slug>\w+)/$', views.page, name='questions_list'),
+    url(r'^popular/page/(?P<slug>\w+)/$', views.popular_page, name='popular_questions_list'),
     url(r'^admin/', admin.site.urls),
 ]
