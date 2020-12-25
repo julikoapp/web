@@ -11,7 +11,7 @@ def test(request, *args, **kwargs):
 def question_details(request,slug):
 	question = get_object_or_404(Question, slug=slug)
 	return render(request, 'qa/question_details.html', { # template maybe 'qa/question_details.html'
-		'title' : question.title #можно было бы шаблонизатором, указав спец.методы в модели(так даже лучше)
+		'title' : question.title, #можно было бы шаблонизатором, указав спец.методы в модели(так даже лучше)
 		'text': question.text,
 	})
 
@@ -25,9 +25,9 @@ def page(request):
 	# perfect baseurl - '/qa/all_questions/?page=' but you need to get url in app отдельно
 	page = paginator.page(page)
 	return render(request, 'qa/question_by_date.html', {
-		questions: page.object_list,
-		paginator: paginator, 
-		page: page,
+		'questions': page.object_list,
+		'paginator': paginator, 
+		'page': page,
 	})
 # На страницу выводится по 10 вопросов. В списке вопросов 
 # должны выводится заголовки (title) вопросов и ссылки на страницы 
