@@ -10,7 +10,7 @@ def test(request, *args, **kwargs):
 @require_GET
 def question_details(request,slug):
 	question = get_object_or_404(Question, slug=slug)
-	return render(request, 'TEMPLATE', { # template maybe 'qa/question_details.html'
+	return render(request, 'qa/question_details.html', { # template maybe 'qa/question_details.html'
 		'title' : question.title #можно было бы шаблонизатором, указав спец.методы в модели(так даже лучше)
 		'text': question.text,
 	})
@@ -21,7 +21,8 @@ def page(request):
 	limit = 10 #or request.GET.get('limit', 10)
 	page = request.GET.get('page', 1)
 	paginator = Paginator(questions, limit)
-	paginator.baseurl = '/qa/all_questions/?page='
+	paginator.baseurl = '/?page=' # like in urls.py -- need update obv
+	# perfect baseurl - '/qa/all_questions/?page=' but you need to get url in app отдельно
 	page = paginator.page(page)
 	return render(request, 'qa/question_by_date.html', {
 		questions: page.object_list,
@@ -37,7 +38,8 @@ def popular_page(request):
 	limit = 10 #or request.GET.get('limit', 10)
 	page = request.GET.get('page', 1)
 	paginator = Paginator(questions, limit)
-	paginator.baseurl = '/qa/all_questions/popular/?page='
+	paginator.baseurl = '/popular/?page=' # like in urls.py -- need update obv
+	# perfect baseurl - '/qa/all_questions/popular/?page=' but you need to get url in app отдельно
 	page = paginator.page(page)
 	return render(request, 'qa/question_by_date.html', {
 		questions: page.object_list,
