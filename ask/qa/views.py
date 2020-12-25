@@ -16,7 +16,8 @@ def question_details(request,slug):
 	})
 
 def page(request):
-	questons = Question.objects.filter(date=fffff)# Необходимо использовать метод new менеджера QuestionManage
+	questions = Question.objects.all() # or .filter(published=True)
+	questions = questions.order_by('-new')
 	limit = 10 #or request.GET.get('limit', 10)
 	page = request.GET.get('page', 1)
 	paginator = Paginator(questions, limit)
@@ -31,7 +32,8 @@ def page(request):
 # должны выводится заголовки (title) вопросов и ссылки на страницы 
 # отдельных вопросов
 def popular_page(request):
-	questions = Question.objects.filter(rating) #!!!!Необходимо использовать метод popular менеджера QuestionManager
+	questions = Question.objects.all() # or .filter(published=True)
+	questions = questions.order_by('-popular')
 	limit = 10 #or request.GET.get('limit', 10)
 	page = request.GET.get('page', 1)
 	paginator = Paginator(questions, limit)
