@@ -27,9 +27,9 @@ def page(request):
 	# perfect baseurl - '/qa/all_questions/?page=' but you need to get url in app отдельно
 	page = paginator.page(page)
 	return render(request, 'qa/question_by_date.html', {
-		'questions': page.object_list,
-		'paginator': paginator, 
-		'page': page,
+		questions: page.object_list,
+		paginator: paginator, 
+		page: page,
 	})
 # На страницу выводится по 10 вопросов. В списке вопросов 
 # должны выводится заголовки (title) вопросов и ссылки на страницы 
