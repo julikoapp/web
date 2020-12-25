@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Popular Questions{% endblock %}
+
+{% block content %}
+
+{% for p in paginator.page_range %}
+
+  <a href="{{ paginator.baseurl }}{{ p }}">
+    {{ p }}
+  </a>
+  
+{% endfor %}
+
+{% endblock %}
