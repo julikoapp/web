@@ -4,12 +4,16 @@
 
 {% block content %}
 
-{% for p in paginator.page_range %}
+<ul>
+  {% for p in questions %}
+    <li>
+    <a href="{{ paginator.baseurl }}{{p}}">
+      {{ p.title }}
+    </a>
 
-  <a href="{{ paginator.baseurl }}{{ p }}">
-    {{ p }}
-  </a>
-  
-{% endfor %}
+    </li>
+
+  {% endfor %}
+</ul>
 
 {% endblock %}

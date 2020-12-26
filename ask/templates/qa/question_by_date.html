@@ -3,13 +3,17 @@
 {% block title %}Questions{% endblock %}
 
 {% block content %}
+<ul>
+  {% for p in questions %}
+    <li>
+    <a href="{{ paginator.baseurl }}{{p}}">
+      {{ p.title }}
+    </a>
 
-{% for p in paginator.page_range %}
+    </li>
 
-  <a href="{{ paginator.baseurl }}{{ p }}">
-    {{ p }}
-  </a>
-  
-{% endfor %}
+  {% endfor %}
+</ul>
+
 
 {% endblock %}

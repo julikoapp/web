@@ -23,10 +23,9 @@ urlpatterns = [
     url(r'^login/', views.test, name='login'),
     url(r'^signup/', views.test, name='signup'),
     url(r'^ask/', views.test, name='test'),
-    url(r'^popular/', views.test, name='test'),
     url(r'^new/', views.test, name='test'),
     url(r'^question/(?P<slug>\w+)/$', views.question_details, name='question_details'),
     url(r'^page/(?P<slug>\w+)/$', views.page, name='questions_list'),
-    url(r'^popular/page/(?P<slug>\w+)/$', views.popular_page, name='popular_questions_list'),
+    url(r'^popular/', views.popular_page, name='popular_questions_list'),
     url(r'^admin/', admin.site.urls),
 ]
