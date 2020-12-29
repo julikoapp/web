@@ -18,7 +18,7 @@ def question_details(request,slug):
 		'text': question.text,
 	})
 
-def page(request,slug):
+def page(request):
 	questions = Question.objects.new() # or .filter(published=True)
 	#questions = questions.order_by('-new')
 	paginator = Paginator(questions, 10)
