@@ -3,7 +3,15 @@
 {% block title %}Question Details{% endblock %}
 
 {% block content %}
+
+
 <h1>{{ title }}</h1>
 <p>{{ text }} </p>
+<hr>
+{% for answer in answers %}
+    <p> {{ answer.text }} </p>
+    <h6> {{ answer.author }}</h6>
+{% endfor %}
+
 
 {% endblock %}

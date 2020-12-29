@@ -13,9 +13,11 @@ def test(request, *args, **kwargs):
 @require_GET
 def question_details(request,slug):
 	question = get_object_or_404(Question, id=slug)
+	#answer = get_object_or_404(Answer, question=question)
 	return render(request, 'qa/question_details.html', { # template maybe 'qa/question_details.html'
 		'title' : question.title, #можно было бы шаблонизатором, указав спец.методы в модели(так даже лучше)
 		'text': question.text,
+		'answers': question.answer_set.all(), #!!!!! didn't know!!!
 	})
 
 def page(request):
