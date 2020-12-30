@@ -22,10 +22,11 @@ urlpatterns = [
    # url(r'^$',views.test, name='main'),
     url(r'^login/', views.test, name='login'),
     url(r'^signup/', views.test, name='signup'),
-    url(r'^ask/$', views.ask, name='ask'),
+    url(r'^ask/$', views.ask_page, name='ask'),
     url(r'^new/', views.test, name='test'),
-    url(r'^question/(?P<slug>\w+)/$', views.question_details, name='question_details'),
-    url(r'^$', views.page, name='questions_list'), # I thought ^page/(?P<slug>\w+)/$
+    url(r'^question/(?P<pk>[0-9]+)/$', views.detail_page, name='detail'),
+    #url(r'^question/(?P<pk>[0-9]+)/$', views.detail_page, name='detail'),
+    url(r'^$', views.page, name='index'), # I thought ^page/(?P<slug>\w+)/$
     url(r'^popular/', views.popular_page, name='popular_questions_list'),
     url(r'^admin/', admin.site.urls),
 ]

@@ -12,36 +12,35 @@ def test(request, *args, **kwargs):
 	return HttpResponse('OK')
 
 
-def question_details(request,slug):
-	question = get_object_or_404(Question, id=slug)
-	if request.method == 'POST':
-		form = AnswerForm(request.POST)
-		if form.is_valid():
-			form.save()
-			return redirect("question_details", slug=slug)
-	else:
-		form = AnswerForm({'question_id':question.id})
-	return render(request, 'qa/question_details.html', { # template maybe 'qa/question_details.html'
-		'title' : question.title, #можно было бы шаблонизатором, указав спец.методы в модели(так даже лучше)
-		'text': question.text,
-		'question':question,
-		'answers': question.answer_set.all(), #!!!!! didn't know!!!
-		'answer_form':form,
-	})
+def detail_page(request, pk):
+    question = get_object_or_404(Question, pk=pk)
+    if request.method == 'GET':
+        form = AnswerForm({'question_id': question.pk})
+    elif request.method == 'POST':
+        form = AnswerForm(request.POST)
+        #form._user = request.user
+        if form.is_valid():
+            form.save()
+            return redirect('detail', pk=question.pk)
+    return render(request, 'qa/detail.html', {
+        'question': question,
+        'answers': question.answer_set.all(),
+        'form': form
+    })
 
-def ask(request):
-	if request.method == 'POST':
-		form = AskForm(request.POST)
-		if form.is_valid():
-			form.clean()
-			asked = form.save()
-			print(asked.id)
-			return redirect('/question/' + str(asked.id) + '/')
-	else:
-		form = AskForm()
-	return render(request, 'qa/ask_form.html', {
-		'ask_form': form,
-	})
+
+def ask_page(request):
+    if request.method == 'GET':
+        form = AskForm()
+    elif request.method == 'POST':
+        form = AskForm(request.POST)
+       # form._user = request.user
+        if form.is_valid():
+            question = form.save().id
+            return redirect('/question/'+str(question)+'/')
+    return render(request, 'qa/ask.html', {
+        'form': form
+    })
 
 
 def page(request):

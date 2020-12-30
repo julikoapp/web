@@ -26,7 +26,6 @@ class AskForm(forms.Form):
         question = Question(**self.cleaned_data)
         question.author = self._user
         question.save()
-        print(question.id)
         return question
 
 
