@@ -10,6 +10,12 @@ class AskForm(forms.Form):
         self._user = user
         super(AskForm, self).__init__(*args, **kwargs)
 
+   # def clean(self):
+       # text = self.cleaned_data['text']
+       # if not text.is_valid():
+        #    raise forms.ValidationError('question text is wrong', code=12)
+        #return text
+
     def save(self):
         # was -- didn't work
         #self.cleaned_data['author'] = self._user
@@ -20,6 +26,7 @@ class AskForm(forms.Form):
         question = Question(**self.cleaned_data)
         question.author = self._user
         question.save()
+        print(question.id)
         return question
 
 

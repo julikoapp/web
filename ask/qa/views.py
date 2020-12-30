@@ -18,10 +18,9 @@ def question_details(request,slug):
 		form = AnswerForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect("question_details", slug=question.id)
+			return redirect("question_details", slug=slug)
 	else:
 		form = AnswerForm({'question_id':question.id})
-	#answer = get_object_or_404(Answer, question=question)
 	return render(request, 'qa/question_details.html', { # template maybe 'qa/question_details.html'
 		'title' : question.title, #можно было бы шаблонизатором, указав спец.методы в модели(так даже лучше)
 		'text': question.text,
@@ -31,21 +30,17 @@ def question_details(request,slug):
 	})
 
 def ask(request):
-	questionid = None
 	if request.method == 'POST':
 		form = AskForm(request.POST)
 		if form.is_valid():
+			form.clean()
 			asked = form.save()
-			questionid = asked.id
-			url = asked.get_url()
-			return redirect(asked.get_absolute_url())
-			#return HttpResponseRedirect(url,)
-			#return HttpResponseRedirect("question_details", slug=form.question.id)
+			print(asked.id)
+			return redirect('/question/' + str(asked.id) + '/')
 	else:
 		form = AskForm()
 	return render(request, 'qa/ask_form.html', {
 		'ask_form': form,
-		'questionid': questionid,
 	})
 
 

@@ -23,8 +23,8 @@ class Question(models.Model):
 	objects = QuestionManager() 
 
 	#????
-	def get_absolute_url(self):
-		return reverse('question_details', args=[self.slug,]) #было pk
+	#def get_absolute_url(self):
+#		return reverse('question_details', args=[self.slug,]) #было pk
 
 class Answer(models.Model):
 	text =  models.TextField()
