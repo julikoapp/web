@@ -25,8 +25,8 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
-    #question = forms.ModelChoiceField(queryset=Question.objects.all(),widget=forms.HiddenInput)
     question_id = forms.IntegerField(widget=forms.HiddenInput)
+    question = forms.ModelChoiceField(queryset=Question.objects.all(),widget=forms.HiddenInput)
     #question = Question.objects.filter(id=question_id)
     def __init__(self, user=None, *args, **kwargs):
         self._user = user

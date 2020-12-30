@@ -2,8 +2,8 @@
 
 
 {% block content %}
-
-<form method="post" action="/"> <!-- why url ask {% url 'ask'%} -->
+<h1>{{ questionid }}</h1>
+<form method="post" action="{% url 'ask'%}"> <!-- why url ask {% url 'ask'%} or {% url 'question_details' questionid %} -->
     {% for field in ask_form %}
         <label>{{ field.label }}</label>
         <div>{{field }}</div>

@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 # Create your models here.
 
 class QuestionManager(models.Manager):
@@ -23,8 +23,8 @@ class Question(models.Model):
 	objects = QuestionManager() 
 
 	#????
-	#def get_absolute_url(self):
-		#return reverse('detail', args=[self.pk,])
+	def get_absolute_url(self):
+		return reverse('question_details', args=[self.slug,]) #было pk
 
 class Answer(models.Model):
 	text =  models.TextField()
