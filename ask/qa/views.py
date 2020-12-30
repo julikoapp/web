@@ -25,11 +25,12 @@ def question_details(request,slug):
 	return render(request, 'qa/question_details.html', { # template maybe 'qa/question_details.html'
 		'title' : question.title, #можно было бы шаблонизатором, указав спец.методы в модели(так даже лучше)
 		'text': question.text,
+		'question':question,
 		'answers': question.answer_set.all(), #!!!!! didn't know!!!
 		'answer_form':form,
 	})
 
-def add_question(request):
+def ask(request):
 	if request.method == 'POST':
 		form = AskForm(request.POST)
 		if form.is_valid():
@@ -38,8 +39,8 @@ def add_question(request):
 			return HttpResponseRedirect(url)
 	else:
 		form = AskForm()
-	return render(request, 'qa/ask_form.html',{
-		'ask_form':form
+	return render(request, 'qa/ask_form.html', {
+		'ask_form': form,
 	})
 
 

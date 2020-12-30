@@ -12,7 +12,7 @@
     <p> {{ answer.text }} </p>
     <h6> {{ answer.author }}</h6>
 {% endfor %}
-<form method="post" action="/question/{{ question.id }}">
+<form method="post" action="/question/{{ question.id }}/">
     {% for field in answer_form %}
         <label>{{ field.label }}</label>
         <div>{{field }}</div>
