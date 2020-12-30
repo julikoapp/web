@@ -1,24 +1,47 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator
-from django.http import HttpResponse
-from qa.models import Question
+from django.http import HttpResponse, HttpResponseRedirect
+from qa.models import Question, Answer
+from qa.forms import AskForm, AnswerForm
 
 # Create your views here.
 def test(request, *args, **kwargs):
 	return HttpResponse('OK')
 
-@require_GET
+
 def question_details(request,slug):
 	question = get_object_or_404(Question, id=slug)
+	if request.method == 'POST':
+		form = AnswerForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect("question_details", slug=question.id)
+	else:
+		form = AnswerForm({'question_id':question.id})
 	#answer = get_object_or_404(Answer, question=question)
 	return render(request, 'qa/question_details.html', { # template maybe 'qa/question_details.html'
 		'title' : question.title, #можно было бы шаблонизатором, указав спец.методы в модели(так даже лучше)
 		'text': question.text,
 		'answers': question.answer_set.all(), #!!!!! didn't know!!!
+		'answer_form':form,
 	})
+
+def add_question(request):
+	if request.method == 'POST':
+		form = AskForm(request.POST)
+		if form.is_valid():
+			asked = form.save()
+			url = asked.get_url()
+			return HttpResponseRedirect(url)
+	else:
+		form = AskForm()
+	return render(request, 'qa/ask_form.html',{
+		'ask_form':form
+	})
+
 
 def page(request):
 	questions = Question.objects.new() # or .filter(published=True)

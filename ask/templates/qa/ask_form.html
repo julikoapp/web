@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Question Details{% endblock %}
+
+{% block content %}
+
+<form method="post" action="{% url 'ask'%}"> <!-- why url ask -->
+    {% csrf_token %}
+    <fieldset>
+        {{ ask_form.title }}
+        <hr>
+        {{ ask_form.text }}
+       <!-- {% for field in answer_form%}
+        <p>{{ field }}</p>
+        {% endfor %} -->
+    </fieldset>
+    <button type="submit"> SAVE </button>
+</form>
+{% endblock %}
