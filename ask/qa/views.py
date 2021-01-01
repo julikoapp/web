@@ -8,11 +8,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from qa.models import Question, Answer
 from qa.forms import AskForm, AnswerForm, RegistrationForm, LoginForm
-#import salt_and_hash
-#import datetime
-#import Session
-#import generate_long_random_key
-#import timedelta
+from django.contrib.sessions.backends.db import SessionStore
 
 # Create your views here.
 def test(request, *args, **kwargs):
@@ -94,32 +90,11 @@ def registration(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save() #-- actually better option, logic should not be in views
-            # but we got error, soo
-            # user = User.objects.create_user(
-            #     username=form.cleaned_data['username'],
-            #     password=form.cleadned_data['password1'], #or just password?
-            #     email=form.cleadned_data['email']
-            # )
             return HttpResponseRedirect('/')
     return render(request,"qa/registration.html",{
         "form" : form
     })
 
-
-#def do_login(login, password):
-#    try:
-#        user = User.objects.get(username=login)
-#    except User.DoesNotExist:
-#        return None
-#    hashed_pass = salt_and_hash(password)
-#     if user.password != hashed_pass:
-#         return None
-#     session = Session()
-#     session.key = generate_long_random_key()
-#     session.user =user
-#     session.expires = datetime.now() + timedelta(days=1)
-#     session.save()
-#     return session.key
 
 
 #При GET запросе должна отображаться форма для ввода данных,
@@ -138,11 +113,16 @@ def login(request):
 
         user = authenticate(username=username, password=password)
         if user is not None:
-            sessionid = login(request, user)
-
+            login(request, user)
+            #request.session['user_id'] = user.id
+            #s = SessionStore()
+            #s.create()
+            #sessionid = s.session_key
+            sessionid = request.session.session_key
         #sessid = do_login(login, password)
             if sessionid:
                 response = HttpResponseRedirect(url)
+                # request.session['sessionid'] = sessionid
                 response.set_cookie('sessionid', sessionid)
                 return response
         else:
