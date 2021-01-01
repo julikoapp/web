@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}block.super Задать вопрос {% endblock %}
+{% block content %}
+{% if error != '' %}
+    <h1> Error message: {{ error }}</h1>
+{% endif %}
+<form class="form-horizontal" method="post" action="{% url 'login' %}">
+        <fieldset>
+            {% for field in form %}
+                <div class="control-group
+                    {% if field.errors %}has-error{% endif %}">
+                    <label class="control-label">{{ field.label }}</label>
+                    <div class="controls">{{ field }}</div>
+                </div>
+            {% endfor %}
+            {% csrf_token %}
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Ответить</button>
+        </div>
+</form>
+{% endblock %}
