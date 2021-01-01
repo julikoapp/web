@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 from django import forms
 from .models import Question, Answer
 from django.contrib.auth.models import User
@@ -44,23 +46,20 @@ class AnswerForm(forms.Form):
 
 class RegistrationForm(forms.Form):
     username = forms.CharField()
-    first_name = forms.CharField()
-    last_name = forms.CharField()
+    #first_name = forms.CharField()
+    #last_name = forms.CharField()
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput())
 
     def save(self):
         user = User.objects.create_user(username=self.username,
-                                        first_name=self.first_name,
-                                        last_name=self.last_name,
+                                       # first_name=self.first_name,
+                                       # last_name=self.last_name,
                                         password=self.password,
                                         email=self.email)
-        return ...
+        return user
 
 
 class LoginForm(forms.Form):
     username = forms.CharField()
-    #first_name = forms.CharField()
-    #last_name = forms.CharField()
-    #email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput())
