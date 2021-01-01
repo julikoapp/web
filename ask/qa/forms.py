@@ -46,16 +46,13 @@ class AnswerForm(forms.Form):
 
 class RegistrationForm(forms.Form):
     username = forms.CharField()
-    #first_name = forms.CharField()
-    #last_name = forms.CharField()
     email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput())
+    password = forms.CharField(widget=forms.PasswordInput)
 
-    #def save(self):
-    #    user = User.objects.create_user(username=self.username,
-    #                                    password=self.password,
-    #                                    email=self.email)
-    #    return user
+    def save(self):
+        user = User.objects.create_user(**self.cleaned_data)
+        return user
+
 
 
 class LoginForm(forms.Form):
