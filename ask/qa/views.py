@@ -89,7 +89,16 @@ def registration(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save() #-- actually better option, logic should not be in views
+            user = form.save() #-- actually better option, logic should not be in views
+            if user is not None:
+                login(request, user)
+                sessionid = request.session.session_key
+                # sessid = do_login(login, password)
+                if sessionid:
+                    response = HttpResponseRedirect('/')
+                    # request.session['sessionid'] = sessionid
+                    response.set_cookie('sessionid', sessionid)
+                    return response
             return HttpResponseRedirect('/')
     return render(request,"qa/registration.html",{
         "form" : form
@@ -101,12 +110,12 @@ def registration(request):
 # при POST запросе происходит вход (login) на сайт, возвращается редирект на главную страницу.
 # Пользователь должен получить авторизационную куку с именем sessionid.  ﻿
 #Имена POST параметров и куки ﻿важны!
-def login(request):
+def log_in(request): #you can not call func just login
     error = ''
     if request.method == "GET":
         form = LoginForm()
     if request.method == "POST":
-        form = LoginForm()
+        form = LoginForm() #why it is needed?
         username = request.POST.get('username')
         password = request.POST.get('password')
         url = request.POST.get('continue','/')
