@@ -93,7 +93,13 @@ def registration(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            #form.save() -- actually better option, logic should not be in views
+            # but we got error, soo
+            user = User.objects.create_user(
+                username=form.cleaned_data['username'],
+                password=form.cleadned_data['password1'], #or just password?
+                email=form.cleadned_data['email']
+            )
             return HttpResponseRedirect('/')
     return render(request,"qa/registration.html",{
         "form" : form
@@ -126,11 +132,11 @@ def login(request):
         form = LoginForm()
     if request.method == "POST":
         form = LoginForm()
-        login = request.POST.get('username')
+        username = request.POST.get('username')
         password = request.POST.get('password')
         url = request.POST.get('continue','/')
 
-        user = authenticate(username=login, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
             sessionid = login(request, user)
 

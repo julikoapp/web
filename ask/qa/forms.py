@@ -51,13 +51,11 @@ class RegistrationForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput())
 
-    def save(self):
-        user = User.objects.create_user(username=self.username,
-                                       # first_name=self.first_name,
-                                       # last_name=self.last_name,
-                                        password=self.password,
-                                        email=self.email)
-        return user
+    #def save(self):
+    #    user = User.objects.create_user(username=self.username,
+    #                                    password=self.password,
+    #                                    email=self.email)
+    #    return user
 
 
 class LoginForm(forms.Form):
