@@ -12,6 +12,8 @@ class AskForm(forms.Form):
         self._user = user
         super(AskForm, self).__init__(*args, **kwargs)
 
+    def clean(self):
+        return self.cleaned_data
     def save(self):
         # was -- didn't work
         #self.cleaned_data['author'] = self._user

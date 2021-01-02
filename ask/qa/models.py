@@ -23,6 +23,11 @@ class Question(models.Model):
 	#likes = models.ManyToManyField(User, related_name='likes_set') #!!!!!!!!!!!!!! use likes.set instead what does it mean?
 	objects = QuestionManager() 
 
+	def __unicode__(self):
+		return self.text
+
+	def get_url(self):
+		return '/question/%d/' % self.id
 	#????
 	#def get_absolute_url(self):
 #		return reverse('question_details', args=[self.slug,]) #было pk

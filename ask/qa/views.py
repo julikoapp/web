@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404,redirect
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_GET
@@ -33,17 +34,38 @@ def detail_page(request, pk):
 
 
 def ask_page(request):
-    if request.method == 'GET':
-        form = AskForm()
-    elif request.method == 'POST':
+    question1 = Question.objects.create()
+
+    if request.method == 'POST':
         form = AskForm(request.POST)
-        form._user = request.user
+        #form._user = request.user
+#!!!!!!!!до этого процесс в джанго даже не доходит, why?
+        user = request.user
         if form.is_valid():
-            form.save()
-            question = form.save().id
-            return redirect('/question/'+str(question)+'/')
+            #form.save()
+            question1.title = form.title #or ['title']??
+            question1.text = form.text #or ['text']??
+
+            #url = post.get_url()
+            question1.author = user
+            question1.save()
+            print(question1.title)
+            #id_possible = question1.id
+            #question.save()
+            #url = question.get_url()
+            print(question1.id)
+            #print(url)
+            #question = form.save().id
+            #return redirect('/question/'+str(question)+'/')
+            return redirect('detail', pk=question1.id)
+            #return HttpResponseRedirect('detail', pk=question1.pk)#('detail', pk=question1.id)
+            #return render(request, '/qa/detail.html')
+    else:# request.method == 'GET':
+        form = AskForm()
+
     return render(request, 'qa/ask.html', {
-        'form': form
+        'form': form,
+        'question': question1,
     })
 
 
